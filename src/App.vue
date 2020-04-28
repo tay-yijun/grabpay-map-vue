@@ -10,11 +10,11 @@
         <!-- Merchant List and Summary Card -->
         <b-col sm="4" order="1" class="h-100">
           <MerchantListSummaryCard :merchantSummary="merchantsSummary" />
-          <MerchantList :merchants="orderedMerchants" />
+          <MerchantList :merchants="orderedMerchants" @update-selected-item="updateSelectedItem" />
         </b-col>
         <!-- MapItem -->
         <b-col sm="8" order="2" class="h-100">
-          <MapItem :merchants="filteredMerchants" />
+          <MapItem :merchants="filteredMerchants" :selectedItem="selectedItem" />
         </b-col>
       </b-row>
     </b-container>
@@ -36,13 +36,13 @@ export default {
   components: {
     TheNavBar,
     MapItem,
-    MerchantList, 
+    MerchantList,
     MerchantListSummaryCard
   },
   data() {
     return {
       // merchants: data[1],
-      merchants: data[1].slice(0, 200),
+      merchants: data[1].slice(0, 1000),
       sortDirection: "asc",
       filterCategory: "",
       searchVal: "",
@@ -77,7 +77,7 @@ export default {
             type: "Feature",
             properties: {
               name: merchant.mex_trading_name,
-              category: merchant.category, 
+              category: merchant.category,
               address: merchant.address
             },
             geometry: {
@@ -100,7 +100,9 @@ export default {
             .toLowerCase()
             .includes(this.searchVal.toLowerCase()) ||
           // Or match Merchant address
-          merchant.properties.address.toLowerCase().includes(this.searchVal.toLowerCase())
+          merchant.properties.address
+            .toLowerCase()
+            .includes(this.searchVal.toLowerCase())
         );
       });
       // features = this.merchantsGeojson.features.filter(merchant => {
@@ -108,7 +110,7 @@ export default {
       //   let name = merchant.properties.name.toLowerCase();
       //   return name.indexOf(value) > -1;
       // });
-      return features; 
+      return features;
     },
     // Filter by filterCategory
     filteredMerchantsByDropdown() {
@@ -119,18 +121,18 @@ export default {
         features = this.filteredMerchantsBySearch.filter(
           merchant => merchant.properties.category == this.filterCategory
         );
-        return features; 
+        return features;
       }
-    }, 
+    },
     // Filtered combined
     filteredMerchants() {
       let geojsonObj = {
         type: "FeatureCollection",
         features: []
       };
-      geojsonObj.features = this.filteredMerchantsByDropdown; 
-      return geojsonObj; 
-    }, 
+      geojsonObj.features = this.filteredMerchantsByDropdown;
+      return geojsonObj;
+    },
     // Use orderBy in Lodash to re-order data
     orderedMerchants() {
       let geojsonObj = {
@@ -139,14 +141,14 @@ export default {
       };
       geojsonObj.features = _.orderBy(
         this.filteredMerchants.features,
-        "properties.name", 
+        "properties.name",
         this.sortDirection
       );
-      return geojsonObj; 
+      return geojsonObj;
     },
     merchantsSummary() {
-      let merchantsCount = this.filteredMerchants.features.length; 
-      return merchantsCount; 
+      let merchantsCount = this.filteredMerchants.features.length;
+      return merchantsCount;
     }
   },
   methods: {
@@ -158,6 +160,9 @@ export default {
     },
     updateFilterCategory(e) {
       this.filterCategory = e;
+    },
+    updateSelectedItem(e) {
+      this.selectedItem = e;
     },
     // Returns category string
     setCategory(type_fnb, type_retail, type_service) {

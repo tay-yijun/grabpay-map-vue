@@ -10,6 +10,9 @@ export default {
   props: {
     merchants: {
       type: Object
+    }, 
+    selectedItem: {
+      type: Object
     }
   },
   mounted() {
@@ -69,44 +72,26 @@ export default {
       });
     });
   },
-  methods: {
-  },
+  methods: {},
   watch: {
     // Update layer when props changes
     merchants: function() {
-      this.map.getSource("merchantsLayer").setData(this.merchants); 
+      this.map.getSource("merchantsLayer").setData(this.merchants);
+    },
+    // To fly to location and drop a marker on selectedItem value change
+    selectedItem: function() {
+      let lngLat = [this.selectedItem.geometry.coordinates[0], this.selectedItem.geometry.coordinates[1]]; 
+      // Fly to location
+      this.map.flyTo({
+        center: lngLat,
+        zoom: 15
+      });
+      // Set marker position to selectedItem
+      this.marker
+        .setLngLat(lngLat)
+        .addTo(this.map);
     }
-  }, 
-  // computed: {
-  //   // Parse props to geojson object
-  //   merchantsGeojson () {
-  //     let geojsonLayer = {
-  //       type: "FeatureCollection",
-  //       features: []
-  //     }; 
-  //     this.merchants.forEach(merchant => {
-  //       // if (
-  //       //   // Check for valid latlng
-  //       //   merchant.lat !== undefined ||
-  //       //   merchant.lng !== undefined
-  //       // ) {
-  //         let feature = {
-  //           type: "Feature",
-  //           properties: {
-  //             name: merchant.mex_trading_name,
-  //             category: merchant.category
-  //           },
-  //           geometry: {
-  //             type: "Point",
-  //             coordinates: [merchant.lng, merchant.lat]
-  //           }
-  //         };
-  //         geojsonLayer.features.push(feature);
-  //       // }
-  //     });
-  //     return geojsonLayer;
-  //   }
-  // }
+  }
 };
 </script>
 

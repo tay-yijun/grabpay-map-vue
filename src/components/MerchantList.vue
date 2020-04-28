@@ -3,7 +3,8 @@
     <b-list-group>
       <div v-for="merchant in merchants.features" :key="merchant.id">
         <b-list-group-item>
-          <MerchantListItem :merchant="merchant" />
+          <!-- Listener to pass emitted value from Grandchild to Parent -->
+          <MerchantListItem :merchant="merchant" v-on="$listeners"/>
         </b-list-group-item>
       </div>
     </b-list-group>
