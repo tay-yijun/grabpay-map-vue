@@ -2,7 +2,7 @@
 
 ## Project Description
 
-This project was created using [Vue CLI](https://github.com/vuejs/vue-cli). 
+Proof of concept project to display GrabPay Merchants on a map. Only displays 1000 merchants. 
 
 ##### Technologies
 
@@ -12,21 +12,4 @@ This project was created using [Vue CLI](https://github.com/vuejs/vue-cli).
 * bootstrap-vue
 * axios 
 
-## Setup
-
-##### Install dependencies
-```
-npm install
-```
-##### Compiles and hot-reloads for development
-```
-npm run serve
-```
-##### Compiles and minifies for production
-```
-npm run build
-```
-##### Lints and fixes files
-```
-npm run lint
-```
+This project was created using [Vue CLI](https://github.com/vuejs/vue-cli). 

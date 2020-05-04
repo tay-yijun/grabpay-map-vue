@@ -5,13 +5,16 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint", 
+    "deploy": "gh-pages -d dist"
   },
+  "homepage": "https://tay-yijun.github.io/grabpay-map-vue",  
   "dependencies": {
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
     "bootstrap-vue": "^2.9.0",
     "core-js": "^3.6.4",
+    "gh-pages": "^2.2.0",
     "lodash": "^4.17.15",
     "mapbox-gl": "^1.9.0",
     "vue": "^2.6.11",
