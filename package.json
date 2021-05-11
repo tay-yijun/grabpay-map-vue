@@ -15,7 +15,7 @@
     "bootstrap-vue": "^2.9.0",
     "core-js": "^3.6.4",
     "gh-pages": "^2.2.0",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "mapbox-gl": "^1.9.0",
     "vue": "^2.6.11",
     "vue-router": "^3.1.6"
